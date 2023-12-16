@@ -8,10 +8,10 @@ namespace Domain.Enums
 {
     public enum Status
     {
-        Created = 0,
-        Paied = 1,
-        Finished = 2,
-        Canceled = 3,
-        Refounded = 4
+        Created = 1,
+        Paied = 2,
+        Finished = 3,
+        Canceled = 4,
+        Refounded = 5
     }
 }

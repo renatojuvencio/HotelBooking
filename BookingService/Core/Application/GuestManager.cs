@@ -18,7 +18,8 @@ namespace Application
             try
             {
                 var guest = GuestDTO.MapToEntity(request.Data);
-                request.Data.Id = await _guestRepository.Create(guest);
+                await guest.Save(_guestRepository);
+                request.Data.Id = guest.Id;
                 return new GuestResponse
                 {
                     Data = request.Data,
