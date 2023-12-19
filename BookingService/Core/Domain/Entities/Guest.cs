@@ -16,6 +16,7 @@ namespace Domain.Entities
         private void ValidState()
         {
             if(DocumentId == null ||
+               string.IsNullOrEmpty(DocumentId.IdNumber) ||
                DocumentId.IdNumber.Length <= 3 ||
                DocumentId.DocumentType == 0)
             {
@@ -24,7 +25,10 @@ namespace Domain.Entities
 
             if(string.IsNullOrEmpty(Name) ||
                string.IsNullOrEmpty(Surname) ||
-               string.IsNullOrEmpty(Email))
+               string.IsNullOrEmpty(Email) ||
+               string.IsNullOrWhiteSpace(Name) ||
+               string.IsNullOrWhiteSpace(Surname) ||
+               string.IsNullOrWhiteSpace(Email))
             {
                 throw new MissingRequiredInformationException();
             }
@@ -44,5 +48,6 @@ namespace Domain.Entities
             {
                 await guestRepository.Create(this);
             }
+        }
     }
 }

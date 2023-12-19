@@ -1,4 +1,5 @@
-﻿using Application.Guest.DTOs;
+﻿using Application;
+using Application.Guest.DTOs;
 using Application.Guest.Ports;
 using Application.Guest.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,11 @@ namespace API.Controllers
     {
         private readonly ILogger<GuestController> _logger;
         private readonly IGuestManager _guestManager;
+        public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.NOT_FOUND,
+                                                                      ErrorCode.COULDNOT_STORE_DATA,
+                                                                      ErrorCode.INVALID_ID_PERSON,
+                                                                      ErrorCode.MISSING_REQUERED_INFORMATION,
+                                                                      ErrorCode.INVALID_EMAIL};
 
         public GuestController(ILogger<GuestController> logger, IGuestManager guestManager)
         {
@@ -29,7 +35,7 @@ namespace API.Controllers
             
             if (res.Success) return Created("", res.Data);
 
-            if (res.ErrorCode == Application.ErrorCode.NOT_FOUND) return BadRequest(res);
+            if (errorCodesList.Contains(res.ErrorCode)) return BadRequest(res);
 
             _logger.LogError("Response with unknow ErrorCode Returned", res);
             return BadRequest(500);

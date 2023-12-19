@@ -1,6 +1,6 @@
 ﻿namespace Domain.Exceptions
 {
-    internal class InvalidEmailException : Exception
+    public class InvalidEmailException : Exception
     {
     }
 }
