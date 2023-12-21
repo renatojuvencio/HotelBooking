@@ -132,7 +132,7 @@ namespace ApplicationTests
                 Name = "Fulano",
                 Surname = "Silva",
                 Email = "fulano@silva.com",
-                DocumentId = new Domain.ValueObjects.PersonId
+                DocumentId = new Domain.Guest.ValueObjects.PersonId
                 {
                     DocumentType = DocumentType.Passport,
                     IdNumber = "2134567890"
