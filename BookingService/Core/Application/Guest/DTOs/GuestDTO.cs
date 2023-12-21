@@ -1,5 +1,5 @@
 ﻿using Domain.Guest.Enums;
-using Entities = Domain.Entities;
+using Entities = Domain.Guest.Entities;
 namespace Application.Guest.DTOs
 {
     public class GuestDTO
@@ -11,7 +11,7 @@ namespace Application.Guest.DTOs
         public string IdNumber { get; set; }
         public int IdTypeCode { get; set; }
 
-        public static Domain.Guest.Entities.Guest MapToEntity(GuestDTO guestDTO)
+        internal static Domain.Guest.Entities.Guest MapToEntity(GuestDTO guestDTO)
         {
             return new Entities.Guest
             {

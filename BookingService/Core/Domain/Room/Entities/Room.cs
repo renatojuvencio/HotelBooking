@@ -35,7 +35,7 @@ namespace Domain.Room.Entities
                Level == null ||
                Price == null)
             {
-                throw new MissingRequeredInformationException();
+                throw new InvalidRoomDataException();
             }
         }
         public async Task Save(IRoomRepository roomRepository)
