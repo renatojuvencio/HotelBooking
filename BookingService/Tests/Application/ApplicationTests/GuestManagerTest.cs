@@ -2,7 +2,7 @@ using Application;
 using Application.Guest;
 using Application.Guest.DTOs;
 using Application.Guest.Requests;
-using Domain.Entities;
+using Domain.Guest.Entities;
 using Domain.Guest.Enums;
 using Domain.Guest.Ports;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;

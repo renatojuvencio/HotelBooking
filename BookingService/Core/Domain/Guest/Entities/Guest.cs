@@ -2,7 +2,7 @@
 using Domain.Guest.Ports;
 using Domain.Guest.ValueObjects;
 
-namespace Domain.Entities
+namespace Domain.Guest.Entities
 {
     public class Guest
     {
@@ -39,7 +39,7 @@ namespace Domain.Entities
         public async Task Save(IGuestRepository guestRepository)
         {
             ValidState();
-            if (this.Id == 0)
+            if (Id == 0)
             {
                 await guestRepository.Create(this);
             }

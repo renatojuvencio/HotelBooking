@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Entities = Domain.Entities;
 namespace Data.Room
 {
-    public class RoomConfiguration : IEntityTypeConfiguration<Entities.Room>
+    public class RoomConfiguration : IEntityTypeConfiguration<Domain.Room.Entities.Room>
     {
-        public void Configure(EntityTypeBuilder<Entities.Room> builder)
+        public void Configure(EntityTypeBuilder<Domain.Room.Entities.Room> builder)
         {
             builder.HasKey(x => x.Id);
             builder.OwnsOne(x => x.Price)

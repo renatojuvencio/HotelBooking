@@ -10,14 +10,14 @@ namespace Data.Guest
         {
             _hotelDBContext = hotelDBContext;
         }
-        public async Task<int> Create(Domain.Entities.Guest guest)
+        public async Task<int> Create(Domain.Guest.Entities.Guest guest)
         {
             _hotelDBContext.Guests.Add(guest);
             await _hotelDBContext.SaveChangesAsync();
             return guest.Id;
         }
 
-        public async Task<Domain.Entities.Guest> Get(int Id)
+        public async Task<Domain.Guest.Entities.Guest> Get(int Id)
         {
             return await _hotelDBContext.Guests.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
