@@ -1,4 +1,4 @@
-﻿using Domain.ValueObjects;
+﻿using Domain.Guest.ValueObjects;
 
 namespace Domain.Entities
 {

@@ -1,6 +1,6 @@
 ﻿using Domain.Exceptions;
-using Domain.Ports;
-using Domain.ValueObjects;
+using Domain.Guest.Ports;
+using Domain.Guest.ValueObjects;
 using Shared;
 
 namespace Domain.Entities

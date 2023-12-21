@@ -2,7 +2,8 @@ using Application;
 using Application.Guest.DTOs;
 using Application.Guest.Requests;
 using Domain.Entities;
-using Domain.Ports;
+using Domain.Guest.Enums;
+using Domain.Guest.Ports;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
 
@@ -131,7 +132,7 @@ namespace ApplicationTests
                 Email = "fulano@silva.com",
                 DocumentId = new Domain.ValueObjects.PersonId
                 {
-                    DocumentType = Domain.Enums.DocumentType.Passport,
+                    DocumentType = DocumentType.Passport,
                     IdNumber = "2134567890"
                 }
             };

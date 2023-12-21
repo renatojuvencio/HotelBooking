@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Ports
+namespace Domain.Guest.Ports
 {
     public interface IGuestRepository
     {

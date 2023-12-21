@@ -1,4 +1,4 @@
-﻿using Domain.Enums;
+﻿using Domain.Guest.Enums;
 using Entities = Domain.Entities;
 namespace Application.Guest.DTOs
 {
