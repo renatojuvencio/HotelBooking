@@ -6,7 +6,8 @@
         COULDNOT_STORE_DATA = 2,
         INVALID_ID_PERSON = 3,
         MISSING_REQUERED_INFORMATION = 4,
-        INVALID_EMAIL = 5
+        INVALID_EMAIL = 5,
+        GUES_NOT_FOUND = 6
     }
 
     public abstract class Response

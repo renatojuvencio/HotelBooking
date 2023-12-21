@@ -5,10 +5,9 @@ using Domain.Entities;
 using Domain.Ports;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
-using System.Security.Cryptography.X509Certificates;
 
-namespace ApplicationTests 
-{ 
+namespace ApplicationTests
+{
 
     public class Tests
     {
@@ -119,6 +118,46 @@ namespace ApplicationTests
             Assert.IsNotNull(res);
             Assert.IsFalse(res.Success);
             Assert.AreEqual(res.ErrorCode, ErrorCode.MISSING_REQUERED_INFORMATION);
+        }
+
+        [Test]
+        public async Task GetGuestSuccess()
+        {
+            var fakeRepo = new Mock<IGuestRepository>();
+            var fakeGuest = new Guest {
+                Id = 1,
+                Name = "Fulano",
+                Surname = "Silva",
+                Email = "fulano@silva.com",
+                DocumentId = new Domain.ValueObjects.PersonId
+                {
+                    DocumentType = Domain.Enums.DocumentType.Passport,
+                    IdNumber = "2134567890"
+                }
+            };
+
+            fakeRepo.Setup(x => x.Get(333))
+                                        .Returns(Task.FromResult((Guest?)fakeGuest));
+
+            guestManager = new GuestManager(fakeRepo.Object);
+
+            var res = await guestManager.GetGuest(333);
+            Assert.IsNotNull(res);
+            Assert.IsTrue(res.Success);
+            Assert.AreEqual(res.Data.Name, fakeGuest.Name);
+        }
+
+        [Test]
+        public async Task Should_Return_GuestNotFound_WhenGuestDontExist()
+        {
+            var fakeRepo = new Mock<IGuestRepository>();
+            fakeRepo.Setup(x => x.Get(333)).Returns(Task.FromResult<Guest?>(null));
+            guestManager = new GuestManager(fakeRepo.Object);
+
+            var res = await guestManager.GetGuest(333);
+            Assert.IsNotNull(res);
+            Assert.IsFalse(res.Success);
+            Assert.AreEqual(res.ErrorCode, ErrorCode.GUES_NOT_FOUND);
         }
     }
 }
