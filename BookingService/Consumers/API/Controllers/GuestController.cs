@@ -25,14 +25,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<GuestDTO>> Post (GuestDTO guest)
+        public async Task<ActionResult<GuestDTO>> Post(GuestDTO guest)
         {
             var request = new CreateGuestRequest
             {
                 Data = guest
             };
             var res = await _guestManager.CreateGuest(request);
-            
+
             if (res.Success) return Created("", res.Data);
 
             if (errorCodesList.Contains(res.ErrorCode)) return BadRequest(res);

@@ -1,4 +1,5 @@
 using Application;
+using Application.Guest;
 using Application.Guest.DTOs;
 using Application.Guest.Requests;
 using Domain.Entities;
@@ -125,7 +126,8 @@ namespace ApplicationTests
         public async Task GetGuestSuccess()
         {
             var fakeRepo = new Mock<IGuestRepository>();
-            var fakeGuest = new Guest {
+            var fakeGuest = new Guest
+            {
                 Id = 1,
                 Name = "Fulano",
                 Surname = "Silva",

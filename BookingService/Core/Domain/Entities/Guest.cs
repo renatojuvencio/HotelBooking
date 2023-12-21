@@ -1,7 +1,6 @@
-﻿using Domain.Exceptions;
+﻿using Domain.Guest.Exceptions;
 using Domain.Guest.Ports;
 using Domain.Guest.ValueObjects;
-using Shared;
 
 namespace Domain.Entities
 {
@@ -11,11 +10,11 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public PersonId DocumentId {  get; set; }
+        public PersonId DocumentId { get; set; }
 
         private void ValidState()
         {
-            if(DocumentId == null ||
+            if (DocumentId == null ||
                string.IsNullOrEmpty(DocumentId.IdNumber) ||
                DocumentId.IdNumber.Length <= 3 ||
                DocumentId.DocumentType == 0)
@@ -23,7 +22,7 @@ namespace Domain.Entities
                 throw new InvalidPersonDocumentIdException();
             }
 
-            if(string.IsNullOrEmpty(Name) ||
+            if (string.IsNullOrEmpty(Name) ||
                string.IsNullOrEmpty(Surname) ||
                string.IsNullOrEmpty(Email) ||
                string.IsNullOrWhiteSpace(Name) ||

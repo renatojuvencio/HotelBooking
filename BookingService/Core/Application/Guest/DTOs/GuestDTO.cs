@@ -19,7 +19,7 @@ namespace Application.Guest.DTOs
                 Name = guestDTO.Name,
                 Surname = guestDTO.Surname,
                 Email = guestDTO.Email,
-                DocumentId = new Domain.ValueObjects.PersonId
+                DocumentId = new Domain.Guest.ValueObjects.PersonId
                 {
                     IdNumber = guestDTO.IdNumber,
                     DocumentType = (DocumentType)guestDTO.IdTypeCode

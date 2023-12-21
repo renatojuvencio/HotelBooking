@@ -5,12 +5,12 @@ using Application.Guest.Responses;
 using Domain.Guest.Exceptions;
 using Domain.Guest.Ports;
 
-namespace Application
+namespace Application.Guest
 {
     public class GuestManager : IGuestManager
     {
         private IGuestRepository _guestRepository;
-        public GuestManager(IGuestRepository guestRepository) 
+        public GuestManager(IGuestRepository guestRepository)
         {
             _guestRepository = guestRepository;
         }
@@ -79,7 +79,7 @@ namespace Application
         public async Task<GuestResponse> GetGuest(int guestId)
         {
             var guest = await _guestRepository.Get(guestId);
-            if(guest == null)
+            if (guest == null)
             {
                 return new GuestResponse
                 {

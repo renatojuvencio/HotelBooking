@@ -6,8 +6,8 @@ namespace Data.Guest
     public class GuestRepository : IGuestRepository
     {
         private readonly HotelDBContext _hotelDBContext;
-        public GuestRepository(HotelDBContext hotelDBContext) 
-        { 
+        public GuestRepository(HotelDBContext hotelDBContext)
+        {
             _hotelDBContext = hotelDBContext;
         }
         public async Task<int> Create(Domain.Entities.Guest guest)

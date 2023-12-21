@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Guest\Events\" />
+    <Folder Include="Guest\" />
+    <Folder Include="Room\" />
   </ItemGroup>
 
 </Project>
