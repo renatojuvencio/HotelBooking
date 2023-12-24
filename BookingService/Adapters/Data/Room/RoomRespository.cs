@@ -26,7 +26,9 @@ namespace Data.Room
 
         public async Task<Domain.Room.Entities.Room> Get(int id)
         {
-            return await _hotelDBContext.Rooms.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await _hotelDBContext.Rooms
+                .Include(x => x.Bookings)
+                .Where(x => x.Id == id).FirstAsync();
         }
     }
 }

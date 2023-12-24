@@ -11,6 +11,7 @@ namespace Domain.Booking.Entities
         public Booking()
         {
             Status = Status.Created;
+            PlacedAt = DateTime.UtcNow;
         }
         public int Id { get; set; }
         public DateTime PlacedAt { get; set; }
@@ -18,11 +19,7 @@ namespace Domain.Booking.Entities
         public DateTime End { get; set; }
         public Room.Entities.Room Room { get; set; }
         public Guest.Entities.Guest Guest { get; set; }
-        private Status Status { get; set; }
-        public Status CurrentStatus
-        {
-            get { return Status; }
-        }
+        public Status Status { get; set; }
         public void ChangeState(Action action)
         {
             Status = (Status, action) switch
@@ -52,16 +49,19 @@ namespace Domain.Booking.Entities
 
             if(this.Room == null)
                 throw new RoomIsARequiredInformationException();
+
         }
 
         public async Task SaveAsync(IBookingRepository bookingRepository)
         {
             ValidState();
+            this.Guest.ValidGuest();
+            this.Room.ValidRoom();
 
             if(this.Id == 0)
             {
-                var newBooking = bookingRepository.CreateAsync(this);
-                this.Id = newBooking.Id;
+                var newBookingId = await bookingRepository.CreateAsync(this);
+                this.Id = newBookingId;
             }
             else
             {

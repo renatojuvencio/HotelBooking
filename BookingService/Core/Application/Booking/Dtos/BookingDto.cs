@@ -29,6 +29,7 @@ namespace Application.Booking.Dtos
                 End = bookingDto.End,
                 Guest = new Domain.Guest.Entities.Guest { Id = bookingDto.GuestId},
                 Room = new Domain.Room.Entities.Room { Id = bookingDto.RoomId },
+                PlacedAt = bookingDto.PlacedAt
             };
         }
 
@@ -37,12 +38,12 @@ namespace Application.Booking.Dtos
             return new BookingDto
             {
                 Id = booking.Id,
-                CurrentStatus = booking.CurrentStatus,
                 PlacedAt = booking.PlacedAt,
                 Start = booking.Start,
                 End = booking.End,
                 GuestId = booking.Guest.Id,
-                RoomId = booking.Room.Id
+                RoomId = booking.Room.Id,
+                Status = booking.Status
             };
         }
     }

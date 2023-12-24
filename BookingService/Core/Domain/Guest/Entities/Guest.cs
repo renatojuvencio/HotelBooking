@@ -14,26 +14,32 @@ namespace Domain.Guest.Entities
 
         private void ValidState()
         {
-            if (DocumentId == null ||
-               string.IsNullOrEmpty(DocumentId.IdNumber) ||
-               DocumentId.IdNumber.Length <= 3 ||
-               DocumentId.DocumentType == 0)
+            if (this.DocumentId == null ||
+               string.IsNullOrEmpty(this.DocumentId.IdNumber) ||
+               this.DocumentId.IdNumber.Length <= 3 ||
+               this.DocumentId.DocumentType == 0)
             {
                 throw new InvalidPersonDocumentIdException();
             }
 
-            if (string.IsNullOrEmpty(Name) ||
-               string.IsNullOrEmpty(Surname) ||
-               string.IsNullOrEmpty(Email) ||
-               string.IsNullOrWhiteSpace(Name) ||
-               string.IsNullOrWhiteSpace(Surname) ||
-               string.IsNullOrWhiteSpace(Email))
+            if (string.IsNullOrEmpty(this.Name) ||
+               string.IsNullOrEmpty(this.Surname) ||
+               string.IsNullOrEmpty(this.Email) ||
+               string.IsNullOrWhiteSpace(this.Name) ||
+               string.IsNullOrWhiteSpace(this.Surname) ||
+               string.IsNullOrWhiteSpace(this.Email))
             {
                 throw new MissingRequiredInformationException();
             }
 
-            if (!Utils.ValidateEmail(Email))
+            if (!Utils.ValidateEmail(this.Email))
                 throw new InvalidEmailException();
+        }
+
+        public bool ValidGuest()
+        {
+            this.ValidState();
+            return true;
         }
 
         public async Task Save(IGuestRepository guestRepository)
