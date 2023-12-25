@@ -12,11 +12,9 @@ namespace API.Controllers
     {
         private readonly ILogger<BookingController> _logger;
         private readonly IBookingManager _bookingManager;
-        public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.NOT_FOUND,
-                                                                      ErrorCode.COULDNOT_STORE_DATA,
-                                                                      ErrorCode.INVALID_ID_PERSON,
-                                                                      ErrorCode.MISSING_REQUERED_INFORMATION,
-                                                                      ErrorCode.INVALID_EMAIL,
+        public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.BOOKING_COULDNOT_STORE_DATA,
+                                                                      ErrorCode.BOOKING_NOT_FOUND,
+                                                                      ErrorCode.BOOKING_MISSING_REQUERED_INFORMATION,
                                                                     };
 
         public BookingController(ILogger<BookingController> logger, IBookingManager bookingManager)

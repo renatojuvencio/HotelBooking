@@ -80,7 +80,7 @@ namespace ApplicationTests
             var res = await guestManager.CreateGuest(request);
             Assert.IsNotNull(res);
             Assert.IsFalse(res.Success);
-            Assert.AreEqual(res.ErrorCode, ErrorCode.INVALID_ID_PERSON);
+            Assert.AreEqual(res.ErrorCode, ErrorCode.GUEST_INVALID_ID_PERSON);
         }
 
         [TestCase("", "Juvencio", "renato@teste.com")]
@@ -119,7 +119,7 @@ namespace ApplicationTests
             var res = await guestManager.CreateGuest(request);
             Assert.IsNotNull(res);
             Assert.IsFalse(res.Success);
-            Assert.AreEqual(res.ErrorCode, ErrorCode.MISSING_REQUERED_INFORMATION);
+            Assert.AreEqual(res.ErrorCode, ErrorCode.GUEST_MISSING_REQUERED_INFORMATION);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace ApplicationTests
             var res = await guestManager.GetGuest(333);
             Assert.IsNotNull(res);
             Assert.IsFalse(res.Success);
-            Assert.AreEqual(res.ErrorCode, ErrorCode.GUES_NOT_FOUND);
+            Assert.AreEqual(res.ErrorCode, ErrorCode.GUEST_NOT_FOUND);
         }
     }
 }

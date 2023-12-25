@@ -14,7 +14,7 @@ namespace DomainTests.Booking
         public void ShouldAlwaysStartWithCreatedStatus()
         {
             var booking = new Domain.Booking.Entities.Booking();
-            Assert.AreEqual(booking.CurrentStatus, Status.Created);
+            Assert.AreEqual(booking.Status, Status.Created);
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace DomainTests.Booking
         {
             var booking = new Domain.Booking.Entities.Booking();
             booking.ChangeState(Domain.Guest.Enums.Action.Pay);
-            Assert.AreEqual(booking.CurrentStatus, Status.Paied);
+            Assert.AreEqual(booking.Status, Status.Paied);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace DomainTests.Booking
         {
             var booking = new Domain.Booking.Entities.Booking();
             booking.ChangeState(Domain.Guest.Enums.Action.Cancel);
-            Assert.AreEqual(booking.CurrentStatus, Status.Canceled);
+            Assert.AreEqual(booking.Status, Status.Canceled);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace DomainTests.Booking
             var booking = new Domain.Booking.Entities.Booking();
             booking.ChangeState(Domain.Guest.Enums.Action.Pay);
             booking.ChangeState(Domain.Guest.Enums.Action.Finish);
-            Assert.AreEqual(booking.CurrentStatus, Status.Finished);
+            Assert.AreEqual(booking.Status, Status.Finished);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace DomainTests.Booking
             var booking = new Domain.Booking.Entities.Booking();
             booking.ChangeState(Domain.Guest.Enums.Action.Pay);
             booking.ChangeState(Domain.Guest.Enums.Action.Refound);
-            Assert.AreEqual(booking.CurrentStatus, Status.Refounded);
+            Assert.AreEqual(booking.Status, Status.Refounded);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace DomainTests.Booking
             var booking = new Domain.Booking.Entities.Booking();
             booking.ChangeState(Domain.Guest.Enums.Action.Cancel);
             booking.ChangeState(Domain.Guest.Enums.Action.Reopen);
-            Assert.AreEqual(booking.CurrentStatus, Status.Created);
+            Assert.AreEqual(booking.Status, Status.Created);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace DomainTests.Booking
         {
             var booking = new Domain.Booking.Entities.Booking();
             booking.ChangeState(Domain.Guest.Enums.Action.Refound);
-            Assert.AreEqual(booking.CurrentStatus, Status.Created);
+            Assert.AreEqual(booking.Status, Status.Created);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace DomainTests.Booking
             booking.ChangeState(Domain.Guest.Enums.Action.Pay);
             booking.ChangeState(Domain.Guest.Enums.Action.Finish);
             booking.ChangeState(Domain.Guest.Enums.Action.Refound);
-            Assert.AreEqual(booking.CurrentStatus, Status.Finished);
+            Assert.AreEqual(booking.Status, Status.Finished);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace DomainTests.Booking
             booking.ChangeState(Domain.Guest.Enums.Action.Pay);
             booking.ChangeState(Domain.Guest.Enums.Action.Finish);
             booking.ChangeState(Domain.Guest.Enums.Action.Cancel);
-            Assert.AreEqual(booking.CurrentStatus, Status.Finished);
+            Assert.AreEqual(booking.Status, Status.Finished);
         }
     }
 }

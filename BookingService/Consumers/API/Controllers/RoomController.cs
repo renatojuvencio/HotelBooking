@@ -17,9 +17,7 @@ namespace API.Controllers
         private readonly IRoomManager _roomManager;
         public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.ROOM_NOT_FOUND,
                                                                       ErrorCode.ROOM_COULDNOT_STORE_DATA,
-                                                                      ErrorCode.ROOM_INVALID_ID_PERSON,
                                                                       ErrorCode.ROOM_MISSING_REQUERED_INFORMATION,
-                                                                      ErrorCode.ROOM_INVALID_EMAIL,
                                                                     };
         public RoomController(ILogger<GuestController> logger, IRoomManager roomManager)
         {
