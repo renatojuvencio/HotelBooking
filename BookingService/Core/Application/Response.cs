@@ -1,6 +1,6 @@
 ﻿namespace Application
 {
-    public enum ErrorCode
+    public enum ErrorCodes
     {
         //Codes related to Guests 1 - 99
         GUEST_NOT_FOUND = 1,
@@ -18,12 +18,16 @@
         BOOKING_NOT_FOUND = 200,
         BOOKING_COULDNOT_STORE_DATA = 201,
         BOOKING_MISSING_REQUERED_INFORMATION = 202,
+
+        //Payment related codes 500-150
+        PAYMENT_INVALID_PAYMENT_INTENTION = 500,
+        PAYMENT_PROVIDER_NOT_IMPLEMENTED = 501,
     }
 
     public abstract class Response
     {
         public bool Success { get; set; }
         public string Message { get; set; }
-        public ErrorCode ErrorCode { get; set; }
+        public ErrorCodes ErrorCode { get; set; }
     }
 }

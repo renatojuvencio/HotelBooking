@@ -12,11 +12,11 @@ namespace API.Controllers
     {
         private readonly ILogger<GuestController> _logger;
         private readonly IGuestManager _guestManager;
-        public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.GUEST_NOT_FOUND,
-                                                                      ErrorCode.GUEST_COULDNOT_STORE_DATA,
-                                                                      ErrorCode.GUEST_INVALID_ID_PERSON,
-                                                                      ErrorCode.GUEST_MISSING_REQUERED_INFORMATION,
-                                                                      ErrorCode.GUEST_INVALID_EMAIL,
+        public List<ErrorCodes> errorCodesList = new List<ErrorCodes> { ErrorCodes.GUEST_NOT_FOUND,
+                                                                      ErrorCodes.GUEST_COULDNOT_STORE_DATA,
+                                                                      ErrorCodes.GUEST_INVALID_ID_PERSON,
+                                                                      ErrorCodes.GUEST_MISSING_REQUERED_INFORMATION,
+                                                                      ErrorCodes.GUEST_INVALID_EMAIL,
                                                                     };
         public GuestController(ILogger<GuestController> logger, IGuestManager guestManager)
         {

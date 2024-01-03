@@ -33,7 +33,7 @@ namespace Application.Room
                 return new RoomResponse
                 {
                     Success = false,
-                    ErrorCode = ErrorCode.ROOM_MISSING_REQUERED_INFORMATION,
+                    ErrorCode = ErrorCodes.ROOM_MISSING_REQUERED_INFORMATION,
                     Message = "Missing required information passed"
                 };
             }
@@ -42,7 +42,7 @@ namespace Application.Room
                 return new RoomResponse
                 {
                     Success = false,
-                    ErrorCode = ErrorCode.ROOM_COULDNOT_STORE_DATA,
+                    ErrorCode = ErrorCodes.ROOM_COULDNOT_STORE_DATA,
                     Message = "There was an error when saving to DB"
                 };
                 
@@ -58,7 +58,7 @@ namespace Application.Room
                 {
                     Success = false,
                     Message = "No record was found with the given id",
-                    ErrorCode = ErrorCode.ROOM_NOT_FOUND
+                    ErrorCode = ErrorCodes.ROOM_NOT_FOUND
                 };
             }
             return new RoomResponse

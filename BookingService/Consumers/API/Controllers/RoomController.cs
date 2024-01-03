@@ -15,9 +15,9 @@ namespace API.Controllers
     {
         private readonly ILogger<GuestController> _logger;
         private readonly IRoomManager _roomManager;
-        public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.ROOM_NOT_FOUND,
-                                                                      ErrorCode.ROOM_COULDNOT_STORE_DATA,
-                                                                      ErrorCode.ROOM_MISSING_REQUERED_INFORMATION,
+        public List<ErrorCodes> errorCodesList = new List<ErrorCodes> { ErrorCodes.ROOM_NOT_FOUND,
+                                                                      ErrorCodes.ROOM_COULDNOT_STORE_DATA,
+                                                                      ErrorCodes.ROOM_MISSING_REQUERED_INFORMATION,
                                                                     };
         public RoomController(ILogger<GuestController> logger, IRoomManager roomManager)
         {

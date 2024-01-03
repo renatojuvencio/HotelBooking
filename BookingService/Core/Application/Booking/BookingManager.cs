@@ -2,6 +2,8 @@
 using Application.Booking.Ports;
 using Application.Booking.Requests;
 using Application.Booking.Response;
+using Application.Payment.Ports;
+using Application.Payment.Responses;
 using Domain.Booking.Ports;
 using Domain.Guest.Ports;
 using Domain.Room.Ports;
@@ -13,11 +15,13 @@ namespace Application.Booking
         private readonly IBookingRepository _bookingRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IGuestRepository _guestRepository;
-        public BookingManager(IBookingRepository bookingRepository, IGuestRepository guestRepository, IRoomRepository roomRepository)
+        private readonly IPaymentProcessorFactory _paymentProcessorFactory;
+        public BookingManager(IBookingRepository bookingRepository, IGuestRepository guestRepository, IRoomRepository roomRepository, IPaymentProcessorFactory paymentProcessorFactory)
         {
             _bookingRepository = bookingRepository;
             _roomRepository = roomRepository;
             _guestRepository = guestRepository;
+            _paymentProcessorFactory = paymentProcessorFactory;
         }
 
         public async Task<BookingResponse> CreateBookingAsync(CreateBookingRequest request)
@@ -53,6 +57,23 @@ namespace Application.Booking
                 Data = BookingDto.MapToDto(booking),
                 Success = true
             };
+        }
+
+        public async Task<PaymentResponse> PayForABooking(PaymentRequestDto paymentRequestDto)
+        {
+            var paymentProcessor = _paymentProcessorFactory.GetPaymentProcessor(paymentRequestDto.SelectedPaymentProveiders);
+            var response = await paymentProcessor.CapturePayment(paymentRequestDto.PaymentIntention);
+
+            if (response.Success)
+            {
+                return new PaymentResponse
+                {
+                    Data = response.Data,
+                    Success = true,
+                    Message = "Payment successfully processed"
+                };
+            }
+            return response;
         }
     }
 }

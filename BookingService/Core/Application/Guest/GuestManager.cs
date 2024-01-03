@@ -35,7 +35,7 @@ namespace Application.Guest
                 {
                     Data = request.Data,
                     Success = false,
-                    ErrorCode = ErrorCode.GUEST_INVALID_EMAIL,
+                    ErrorCode = ErrorCodes.GUEST_INVALID_EMAIL,
                     Message = "The given email is not valid"
                 };
             }
@@ -47,7 +47,7 @@ namespace Application.Guest
                 {
                     Data = request.Data,
                     Success = false,
-                    ErrorCode = ErrorCode.GUEST_INVALID_ID_PERSON,
+                    ErrorCode = ErrorCodes.GUEST_INVALID_ID_PERSON,
                     Message = "The ID passed is not valid"
                 };
             }
@@ -59,7 +59,7 @@ namespace Application.Guest
                 {
                     Data = request.Data,
                     Success = false,
-                    ErrorCode = ErrorCode.GUEST_MISSING_REQUERED_INFORMATION,
+                    ErrorCode = ErrorCodes.GUEST_MISSING_REQUERED_INFORMATION,
                     Message = "There was an error when saving to DB"
                 };
             }
@@ -70,7 +70,7 @@ namespace Application.Guest
                 {
                     Data = request.Data,
                     Success = false,
-                    ErrorCode = ErrorCode.GUEST_COULDNOT_STORE_DATA,
+                    ErrorCode = ErrorCodes.GUEST_COULDNOT_STORE_DATA,
                     Message = "There was an error when saving to DB"
                 };
             }
@@ -84,7 +84,7 @@ namespace Application.Guest
                 return new GuestResponse
                 {
                     Success = false,
-                    ErrorCode = ErrorCode.GUEST_NOT_FOUND,
+                    ErrorCode = ErrorCodes.GUEST_NOT_FOUND,
                     Message = "No record was found with the given id"
                 };
             }

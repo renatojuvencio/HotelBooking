@@ -2,6 +2,7 @@
 using Application.Booking.Dtos;
 using Application.Booking.Ports;
 using Application.Booking.Requests;
+using Application.Payment.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,9 +13,9 @@ namespace API.Controllers
     {
         private readonly ILogger<BookingController> _logger;
         private readonly IBookingManager _bookingManager;
-        public List<ErrorCode> errorCodesList = new List<ErrorCode> { ErrorCode.BOOKING_COULDNOT_STORE_DATA,
-                                                                      ErrorCode.BOOKING_NOT_FOUND,
-                                                                      ErrorCode.BOOKING_MISSING_REQUERED_INFORMATION,
+        public List<ErrorCodes> errorCodesList = new List<ErrorCodes> { ErrorCodes.BOOKING_COULDNOT_STORE_DATA,
+                                                                      ErrorCodes.BOOKING_NOT_FOUND,
+                                                                      ErrorCodes.BOOKING_MISSING_REQUERED_INFORMATION,
                                                                     };
 
         public BookingController(ILogger<BookingController> logger, IBookingManager bookingManager)
@@ -48,6 +49,17 @@ namespace API.Controllers
             if (res.Success) { return Created("", res.Data); }
 
             return NotFound(res);
+        }
+
+        [HttpPost]
+        [Route("{bookingId}/Pay")]
+        public async Task<ActionResult<PaymentResponse>> Pay(
+            PaymentRequestDto paymentRequestDto, int bookingId)
+        {
+            paymentRequestDto.BookingId = bookingId;
+            var res = await _bookingManager.PayForABooking(paymentRequestDto);
+            if (res.Success) return Ok(res.Data);
+            return BadRequest(res);
         }
     }
 }
