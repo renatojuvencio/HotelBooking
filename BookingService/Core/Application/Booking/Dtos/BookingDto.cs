@@ -20,7 +20,7 @@ namespace Application.Booking.Dtos
         private Status Status { get; set; }
         public Status CurrentStatus { get; set; }
 
-        internal static Entities.Booking MapToEntity(BookingDto bookingDto)
+        public static Entities.Booking MapToEntity(BookingDto bookingDto)
         {
             return new Entities.Booking
             {
@@ -33,17 +33,17 @@ namespace Application.Booking.Dtos
             };
         }
 
-        internal static BookingDto MapToDto(Entities.Booking booking)
+        public static BookingDto MapToDto(Entities.Booking booking)
         {
             return new BookingDto
             {
                 Id = booking.Id,
-                PlacedAt = booking.PlacedAt,
-                Start = booking.Start,
                 End = booking.End,
                 GuestId = booking.Guest.Id,
+                PlacedAt = booking.PlacedAt,
                 RoomId = booking.Room.Id,
-                Status = booking.Status
+                Status = booking.Status,
+                Start = booking.Start,
             };
         }
     }

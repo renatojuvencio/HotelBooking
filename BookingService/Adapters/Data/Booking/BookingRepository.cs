@@ -19,7 +19,10 @@ namespace Data.Booking
 
         public async Task<Domain.Booking.Entities.Booking> GetAsync(int id)
         {
-            return await _context.Bookings.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await _context.Bookings
+                .Include(b => b.Guest)
+                .Include(b => b.Room)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
     }
 }

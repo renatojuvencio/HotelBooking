@@ -1,6 +1,5 @@
 ﻿using Application.Booking.Dtos;
 using Application.Booking.Ports;
-using Application.Booking.Requests;
 using Application.Booking.Response;
 using Application.Payment.Ports;
 using Application.Payment.Responses;
@@ -24,18 +23,18 @@ namespace Application.Booking
             _paymentProcessorFactory = paymentProcessorFactory;
         }
 
-        public async Task<BookingResponse> CreateBookingAsync(CreateBookingRequest request)
+        public async Task<BookingResponse> CreateBookingAsync(BookingDto request)
         {
             try
             {
-                var booking = BookingDto.MapToEntity(request.Data);
+                var booking = BookingDto.MapToEntity(request);
                 booking.Guest = await _guestRepository.Get(booking.Guest.Id);
                 booking.Room = await _roomRepository.Get(booking.Room.Id);
                 await booking.SaveAsync(_bookingRepository);
-                request.Data.Id = booking.Id;
+                request.Id = booking.Id;
                 return new BookingResponse
                 {
-                    Data = request.Data,
+                    Data = request,
                     Success = true
                 };
             }

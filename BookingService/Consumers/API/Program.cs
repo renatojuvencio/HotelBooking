@@ -12,6 +12,7 @@ using Data.Room;
 using Domain.Booking.Ports;
 using Domain.Guest.Ports;
 using Domain.Room.Ports;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Payments.Application;
 using System.Text.Json.Serialization;
@@ -21,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddMediatR(typeof(BookingManager));
 
 #region Config IoC
 builder.Services.AddScoped<IGuestManager, GuestManager>();

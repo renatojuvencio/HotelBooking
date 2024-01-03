@@ -1,8 +1,11 @@
 ﻿using Application;
+using Application.Booking.Commands;
 using Application.Booking.Dtos;
 using Application.Booking.Ports;
+using Application.Booking.Queries;
 using Application.Booking.Requests;
 using Application.Payment.Responses;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -17,21 +20,22 @@ namespace API.Controllers
                                                                       ErrorCodes.BOOKING_NOT_FOUND,
                                                                       ErrorCodes.BOOKING_MISSING_REQUERED_INFORMATION,
                                                                     };
-
-        public BookingController(ILogger<BookingController> logger, IBookingManager bookingManager)
+        private readonly IMediator _mediator;
+        public BookingController(ILogger<BookingController> logger, IBookingManager bookingManager, IMediator mediator)
         {
             _bookingManager = bookingManager;
             _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<ActionResult<BookingDto>> Post(BookingDto booking)
         {
-            var request = new CreateBookingRequest
+            var command = new CreateBookingCommand
             {
-                Data = booking
+                BookingDto = booking
             };
-            var res = await _bookingManager.CreateBookingAsync(request);
+            var res = await _mediator.Send(command);
 
             if (res.Success) return Created("", res.Data);
 
@@ -44,10 +48,14 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<BookingDto>> Get(int id)
         {
-            var res = await _bookingManager.GetBokingAsync(id);
+            var query = new GetBookingQuery
+            {
+                id = id,
+            };
+            var res = await _mediator.Send(query);
 
             if (res.Success) { return Created("", res.Data); }
-
+            _logger.LogError("Could not proccess the request", res);
             return NotFound(res);
         }
 

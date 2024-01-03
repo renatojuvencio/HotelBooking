@@ -7,7 +7,7 @@ namespace Application.Booking.Ports
 {
     public interface IBookingManager
     {
-        Task<BookingResponse> CreateBookingAsync(CreateBookingRequest request);
+        Task<BookingResponse> CreateBookingAsync(BookingDto request);
         Task<BookingResponse> GetBokingAsync(int bookingId);
         Task<PaymentResponse> PayForABooking(PaymentRequestDto paymentRequestDto);
     }
