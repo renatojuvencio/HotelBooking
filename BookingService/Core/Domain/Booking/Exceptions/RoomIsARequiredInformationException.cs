@@ -1,6 +1,6 @@
 ﻿namespace Domain.Booking.Exceptions
 {
-    internal class RoomIsARequiredInformationException : Exception
+    public class RoomIsARequiredInformationException : Exception
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Booking.Exceptions
 {
-    internal class EndIsARequiredInformationException : Exception
+    public class EndIsARequiredInformationException : Exception
     {
     }
 }
