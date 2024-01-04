@@ -10,11 +10,11 @@ namespace Data.Booking
         {
             _context = hotelDBContext;
         }
-        public async Task<int> CreateAsync(Domain.Booking.Entities.Booking booking)
+        public async Task<Domain.Booking.Entities.Booking> CreateAsync(Domain.Booking.Entities.Booking booking)
         {
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
-            return booking.Id;
+            return booking;
         }
 
         public async Task<Domain.Booking.Entities.Booking> GetAsync(int id)

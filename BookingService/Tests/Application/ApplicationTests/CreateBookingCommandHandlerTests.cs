@@ -156,8 +156,8 @@ namespace ApplicationTests
                 BookingDto = new Application.Booking.Dtos.BookingDto
                 {
                     GuestId = 1,
-                    End = DateTime.UtcNow.AddDays(1),
                     RoomId = 1,
+                    End = DateTime.UtcNow.AddDays(1),
                     Start = DateTime.UtcNow,
                 }
             };
@@ -179,10 +179,6 @@ namespace ApplicationTests
             guestRepository.Setup(x => x.Get(command.BookingDto.GuestId))
                 .Returns(Task.FromResult(fakeGuest));
 
-            var fakeBooking = new Booking
-            {
-                Id = 1,
-            };
             var fakeRoom = new Room
             {
                 Id = command.BookingDto.RoomId,
@@ -201,6 +197,12 @@ namespace ApplicationTests
                 .Returns(Task.FromResult(fakeRoom));
 
 
+            var fakeBooking = new Booking
+            {
+                Id = 1,
+                Guest = fakeGuest,
+                Room = fakeRoom
+            };
             var bookingRepoMock = new Mock<IBookingRepository>();
             bookingRepoMock.Setup(x => x.CreateAsync(It.IsAny<Booking>()))
                 .Returns(Task.FromResult(fakeBooking.Id));
