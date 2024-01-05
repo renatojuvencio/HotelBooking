@@ -1,7 +1,6 @@
 ﻿using Domain.Booking.Exceptions;
 using Domain.Booking.Ports;
 using Domain.Guest.Enums;
-using System;
 using Action = Domain.Guest.Enums.Action;
 
 namespace Domain.Booking.Entities
@@ -47,7 +46,7 @@ namespace Domain.Booking.Entities
             if (this.Guest == null)
                 throw new GuestIsARequiredInformationException();
 
-            if(this.Room == null)
+            if (this.Room == null)
                 throw new RoomIsARequiredInformationException();
 
         }
@@ -58,10 +57,10 @@ namespace Domain.Booking.Entities
             this.Guest.ValidGuest();
             this.Room.ValidRoom();
 
-            if(this.Id == 0)
+            if (this.Id == 0)
             {
-                var newBookingId = await bookingRepository.CreateAsync(this);
-                this.Id = newBookingId;
+                var res = await bookingRepository.CreateAsync(this);
+                this.Id = res.Id;
             }
             else
             {

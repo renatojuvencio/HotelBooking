@@ -1,5 +1,4 @@
-﻿using Application.Booking.Dtos;
-using Application.Booking.Response;
+﻿using Application.Booking.Response;
 using MediatR;
 
 namespace Application.Booking.Queries

@@ -1,30 +1,29 @@
 ﻿using Application.Room.DTOs;
-using Application.Room.Ports;
-using Application.Room.Requests;
 using Application.Room.Responses;
 using Domain.Room.Exceptions;
 using Domain.Room.Ports;
+using MediatR;
 
-namespace Application.Room
+namespace Application.Room.Commands
 {
-    public class RoomManager : IRoomManager
+    public class CreateRoomHandler : IRequestHandler<CreateRoomCommand, RoomResponse>
     {
         private IRoomRepository _roomRepository;
 
-        public RoomManager(IRoomRepository roomRepository)
+        public CreateRoomHandler(IRoomRepository roomRepository)
         {
             _roomRepository = roomRepository;
         }
-        public async Task<RoomResponse> CreateRoom(CreateRoomRequest request)
+        public async Task<RoomResponse> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var room = RoomDTO.MapToEntity(request.Data);
+                var room = RoomDTO.MapToEntity(request.RoomDTO);
                 await room.Save(_roomRepository);
-                request.Data.Id = room.Id;
+                request.RoomDTO.Id = room.Id;
                 return new RoomResponse
                 {
-                    Data = request.Data,
+                    Data = request.RoomDTO,
                     Success = true,
                 };
             }
@@ -47,25 +46,6 @@ namespace Application.Room
                 };
 
             }
-        }
-
-        public async Task<RoomResponse> GetRoom(int roomId)
-        {
-            var room = await _roomRepository.Get(roomId);
-            if (room == null)
-            {
-                return new RoomResponse
-                {
-                    Success = false,
-                    Message = "No record was found with the given id",
-                    ErrorCode = ErrorCodes.ROOM_NOT_FOUND
-                };
-            }
-            return new RoomResponse
-            {
-                Data = RoomDTO.MapToDto(room),
-                Success = true
-            };
         }
     }
 }

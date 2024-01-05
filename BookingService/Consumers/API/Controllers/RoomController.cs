@@ -1,11 +1,9 @@
-﻿using Application.Guest.DTOs;
-using Application.Guest.Ports;
-using Application.Guest.Requests;
-using Application;
-using Microsoft.AspNetCore.Mvc;
+﻿using Application;
+using Application.Room.Commands;
 using Application.Room.DTOs;
-using Application.Room.Requests;
-using Application.Room.Ports;
+using Application.Room.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -13,26 +11,27 @@ namespace API.Controllers
     [Route("[controller]")]
     public class RoomController : ControllerBase
     {
-        private readonly ILogger<GuestController> _logger;
-        private readonly IRoomManager _roomManager;
+        private readonly ILogger<RoomController> _logger;
+        private readonly IMediator _mediator;
         public List<ErrorCodes> errorCodesList = new List<ErrorCodes> { ErrorCodes.ROOM_NOT_FOUND,
                                                                       ErrorCodes.ROOM_COULDNOT_STORE_DATA,
                                                                       ErrorCodes.ROOM_MISSING_REQUERED_INFORMATION,
                                                                     };
-        public RoomController(ILogger<GuestController> logger, IRoomManager roomManager)
+        public RoomController(ILogger<RoomController> logger, IMediator mediator)
         {
             _logger = logger;
-            _roomManager = roomManager;
+            _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<ActionResult<RoomDTO>> Post(RoomDTO room)
         {
-            var request = new CreateRoomRequest
+            var command = new CreateRoomCommand
             {
-                Data = room
+                RoomDTO = room
             };
-            var res = await _roomManager.CreateRoom(request);
+
+            var res = await _mediator.Send(command);
 
             if (res.Success) return Created("", res.Data);
 
@@ -45,7 +44,11 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<RoomDTO>> Get(int id)
         {
-            var res = await _roomManager.GetRoom(id);
+            var command = new GetRoomQuery
+            {
+                Id = id,
+            };
+            var res = await _mediator.Send(command);
 
             if (res.Success) { return Created("", res.Data); }
 

@@ -25,7 +25,7 @@ namespace Application.Booking.Commands
             {
                 var booking = BookingDto.MapToEntity(request.BookingDto);
                 booking.Guest = await _guestRepository.Get(booking.Guest.Id);
-                booking.Room = await _roomRepository.Get(booking.Room.Id);
+                booking.Room = await _roomRepository.GetAggregate(booking.Room.Id);
                 await booking.SaveAsync(_bookingRepository);
                 request.BookingDto.Id = booking.Id;
                 return new BookingResponse

@@ -1,6 +1,4 @@
-﻿using Application.Guest.DTOs;
-using Application.Room.DTOs;
-using Domain.Guest.Enums;
+﻿using Domain.Guest.Enums;
 using Entities = Domain.Booking.Entities;
 
 namespace Application.Booking.Dtos
@@ -24,10 +22,10 @@ namespace Application.Booking.Dtos
         {
             return new Entities.Booking
             {
-                Id = bookingDto.Id,  
+                Id = bookingDto.Id,
                 Start = bookingDto.Start,
                 End = bookingDto.End,
-                Guest = new Domain.Guest.Entities.Guest { Id = bookingDto.GuestId},
+                Guest = new Domain.Guest.Entities.Guest { Id = bookingDto.GuestId },
                 Room = new Domain.Room.Entities.Room { Id = bookingDto.RoomId },
                 PlacedAt = bookingDto.PlacedAt
             };

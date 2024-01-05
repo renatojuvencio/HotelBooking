@@ -7,12 +7,6 @@ using Domain.Guest.Ports;
 using Domain.Room.Entities;
 using Domain.Room.Ports;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationTests
 {
@@ -76,7 +70,7 @@ namespace ApplicationTests
 
             var bookingRepoMock = new Mock<IBookingRepository>();
             bookingRepoMock.Setup(x => x.CreateAsync(It.IsAny<Booking>()))
-                .Returns(Task.FromResult(fakeBooking.Id));
+                .Returns(Task.FromResult(fakeBooking));
 
             var handler = GetCommandMock(null, guestRepository, bookingRepoMock);
             var res = await handler.Handle(command, CancellationToken.None);
@@ -139,7 +133,7 @@ namespace ApplicationTests
 
             var bookingRepoMock = new Mock<IBookingRepository>();
             bookingRepoMock.Setup(x => x.CreateAsync(It.IsAny<Booking>()))
-                .Returns(Task.FromResult(fakeBooking.Id));
+                .Returns(Task.FromResult(fakeBooking));
 
             var handler = GetCommandMock(roomRepository, guestRepository, bookingRepoMock);
             var res = await handler.Handle(command, CancellationToken.None);
@@ -155,10 +149,10 @@ namespace ApplicationTests
             {
                 BookingDto = new Application.Booking.Dtos.BookingDto
                 {
-                    GuestId = 1,
                     RoomId = 1,
-                    End = DateTime.UtcNow.AddDays(1),
-                    Start = DateTime.UtcNow,
+                    GuestId = 1,
+                    Start = DateTime.Now,
+                    End = DateTime.Now.AddDays(2),
                 }
             };
 
@@ -168,11 +162,11 @@ namespace ApplicationTests
                 DocumentId = new Domain.Guest.ValueObjects.PersonId
                 {
                     DocumentType = Domain.Guest.Enums.DocumentType.Passport,
-                    IdNumber = "abc123"
+                    IdNumber = "abc1234"
                 },
-                Email = "fakeguest@teste.com",
-                Name = "Fake",
-                Surname = "Teste"
+                Email = "a@a.com",
+                Name = "Fake Guest",
+                Surname = "Fake Guest Surname"
             };
 
             var guestRepository = new Mock<IGuestRepository>();
@@ -186,32 +180,36 @@ namespace ApplicationTests
                 Price = new Domain.Guest.ValueObjects.Price
                 {
                     Currency = Domain.Guest.Enums.AcceptedCurrencies.Dollar,
-                    Value = 123
+                    Value = 100
                 },
-                Name = "Fake room 101",
+                Name = "Fake Room 01",
                 Level = 1,
             };
 
             var roomRepository = new Mock<IRoomRepository>();
-            roomRepository.Setup(x => x.Get(1))
+            roomRepository.Setup(x => x.GetAggregate(command.BookingDto.RoomId))
                 .Returns(Task.FromResult(fakeRoom));
-
 
             var fakeBooking = new Booking
             {
                 Id = 1,
+                Room = fakeRoom,
                 Guest = fakeGuest,
-                Room = fakeRoom
+
             };
+
             var bookingRepoMock = new Mock<IBookingRepository>();
             bookingRepoMock.Setup(x => x.CreateAsync(It.IsAny<Booking>()))
-                .Returns(Task.FromResult(fakeBooking.Id));
+                .Returns(Task.FromResult(fakeBooking));
+            //bookingRepository.Setup(x => x.Save)
 
             var handler = GetCommandMock(roomRepository, guestRepository, bookingRepoMock);
-            var res = await handler.Handle(command, CancellationToken.None);
-            Assert.NotNull(res);
-            Assert.True(res.Success);
-            Assert.Null(res.ErrorCode);
+            var resp = await handler.Handle(command, CancellationToken.None);
+
+            Assert.NotNull(resp);
+            Assert.True(resp.Success);
+            Assert.NotNull(resp.Data);
+            Assert.AreEqual(resp.Data.Id, command.BookingDto.Id);
         }
     }
 }

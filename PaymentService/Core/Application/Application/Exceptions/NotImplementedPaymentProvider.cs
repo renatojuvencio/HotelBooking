@@ -1,7 +1,6 @@
-﻿using Application.Payment.Ports;
+﻿using Application;
+using Application.Payment.Ports;
 using Application.Payment.Responses;
-
-using Application;
 
 namespace Payments.Application.Exceptions
 {

@@ -3,7 +3,6 @@ using Application.Booking.Commands;
 using Application.Booking.Dtos;
 using Application.Booking.Ports;
 using Application.Booking.Queries;
-using Application.Booking.Requests;
 using Application.Payment.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -6,7 +6,7 @@ namespace Data.Booking
     public class BookingRepository : IBookingRepository
     {
         private readonly HotelDBContext _context;
-        public BookingRepository(HotelDBContext hotelDBContext) 
+        public BookingRepository(HotelDBContext hotelDBContext)
         {
             _context = hotelDBContext;
         }

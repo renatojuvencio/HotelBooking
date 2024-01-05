@@ -1,10 +1,5 @@
 ﻿using Domain.Room.Ports;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Room
 {
@@ -24,11 +19,17 @@ namespace Data.Room
             return room.Id;
         }
 
-        public async Task<Domain.Room.Entities.Room> Get(int id)
+        public Task<Domain.Room.Entities.Room> Get(int Id)
         {
-            return await _hotelDBContext.Rooms
-                .Include(x => x.Bookings)
-                .Where(x => x.Id == id).FirstAsync();
+            return _hotelDBContext.Rooms
+                .Where(g => g.Id == Id).FirstOrDefaultAsync();
+        }
+
+        public Task<Domain.Room.Entities.Room> GetAggregate(int Id)
+        {
+            return _hotelDBContext.Rooms
+                .Include(r => r.Bookings)
+                .Where(g => g.Id == Id).FirstAsync();
         }
     }
 }

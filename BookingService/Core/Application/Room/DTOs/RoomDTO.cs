@@ -1,9 +1,4 @@
 ﻿using Domain.Guest.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Room.DTOs
 {
@@ -36,7 +31,7 @@ namespace Application.Room.DTOs
                 Id = room.Id,
                 Name = room.Name,
                 Level = room.Level,
-                Price=room.Price,
+                Price = room.Price,
                 HasGuest = room.HasGuest,
                 InMaintenace = room.InMaintenace,
                 IsAvailable = room.IsAvailable,

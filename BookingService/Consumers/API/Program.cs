@@ -12,10 +12,10 @@ using Data.Room;
 using Domain.Booking.Ports;
 using Domain.Guest.Ports;
 using Domain.Room.Ports;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Payments.Application;
 using System.Text.Json.Serialization;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddMediatR(typeof(BookingManager));
+builder.Services.AddMediatR(typeof(GuestManager));
+builder.Services.AddMediatR(typeof(RoomManager));
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 #region Config IoC
 builder.Services.AddScoped<IGuestManager, GuestManager>();

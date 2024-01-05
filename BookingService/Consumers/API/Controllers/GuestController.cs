@@ -1,7 +1,8 @@
 ﻿using Application;
+using Application.Guest.Commands;
 using Application.Guest.DTOs;
-using Application.Guest.Ports;
-using Application.Guest.Requests;
+using Application.Guest.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,27 +12,28 @@ namespace API.Controllers
     public class GuestController : ControllerBase
     {
         private readonly ILogger<GuestController> _logger;
-        private readonly IGuestManager _guestManager;
+        private readonly IMediator _mediator;
         public List<ErrorCodes> errorCodesList = new List<ErrorCodes> { ErrorCodes.GUEST_NOT_FOUND,
                                                                       ErrorCodes.GUEST_COULDNOT_STORE_DATA,
                                                                       ErrorCodes.GUEST_INVALID_ID_PERSON,
                                                                       ErrorCodes.GUEST_MISSING_REQUERED_INFORMATION,
                                                                       ErrorCodes.GUEST_INVALID_EMAIL,
                                                                     };
-        public GuestController(ILogger<GuestController> logger, IGuestManager guestManager)
+        public GuestController(ILogger<GuestController> logger, IMediator mediator)
         {
             _logger = logger;
-            _guestManager = guestManager;
+            _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<ActionResult<GuestDTO>> Post(GuestDTO guest)
         {
-            var request = new CreateGuestRequest
+            var command = new CreateGuestCommand
             {
-                Data = guest
+                GuestDTO = guest
             };
-            var res = await _guestManager.CreateGuest(request);
+
+            var res = await _mediator.Send(command);
 
             if (res.Success) return Created("", res.Data);
 
@@ -44,7 +46,12 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<GuestDTO>> Get(int id)
         {
-            var res = await _guestManager.GetGuest(id);
+            var query = new GetGuestQuery
+            {
+                Id = id
+            };
+
+            var res = await _mediator.Send(query);
 
             if (res.Success) { return Created("", res.Data); }
 

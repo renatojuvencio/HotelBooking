@@ -10,7 +10,7 @@ using Moq;
 
 namespace ApplicationTests
 {
-
+    [TestFixture]
     public class Tests
     {
         GuestManager guestManager;
@@ -48,7 +48,7 @@ namespace ApplicationTests
 
             var res = await guestManager.CreateGuest(request);
             Assert.IsNotNull(res);
-            Assert.IsTrue(res.Success);
+            Assert.True(res.Success);
             Assert.AreEqual(res.Data.Id, expectedId);
         }
 

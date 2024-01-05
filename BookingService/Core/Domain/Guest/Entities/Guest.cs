@@ -47,11 +47,10 @@ namespace Domain.Guest.Entities
             ValidState();
             if (Id == 0)
             {
-                await guestRepository.Create(this);
+                this.Id = await guestRepository.Create(this);
             }
             else
             {
-                await guestRepository.Create(this);
             }
         }
     }

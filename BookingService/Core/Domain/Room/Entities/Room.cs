@@ -1,5 +1,4 @@
-﻿using Domain.Booking.Entities;
-using Domain.Guest.ValueObjects;
+﻿using Domain.Guest.ValueObjects;
 using Domain.Room.Exceptions;
 using Domain.Room.Ports;
 
@@ -27,14 +26,14 @@ namespace Domain.Room.Entities
 
         public bool HasGuest
         {
-            get 
+            get
             {
                 var notavaiableStatus = new List<Guest.Enums.Status>()
                 { Guest.Enums.Status.Created,
                     Guest.Enums.Status.Paied
                 };
 
-                return this.Bookings.Where(
+                return this.Bookings?.Where(
                     x => x.Room.Id == this.Id &&
                     notavaiableStatus.Contains(x.Status)).Count() > 0;
             }
@@ -65,11 +64,10 @@ namespace Domain.Room.Entities
             ValidState();
             if (Id == 0)
             {
-                await roomRepository.Create(this);
+                this.Id = await roomRepository.Create(this);
             }
             else
             {
-                await roomRepository.Create(this);
             }
         }
     }

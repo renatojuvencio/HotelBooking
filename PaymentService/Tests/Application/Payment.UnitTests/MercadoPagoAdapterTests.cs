@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using Payments.Application;
+﻿using Application;
 using Application.Booking.Dtos;
 using Application.MercadoPago;
-using Application;
+using NUnit.Framework;
+using Payments.Application;
 namespace Payment.UnitTests
 {
     public class MercadoPagoAdapterTests
