@@ -1,15 +1,15 @@
 ﻿using Application.Guest.DTOs;
 using Application.Guest.Responses;
-using Data.Guest;
+using Domain.Guest.Ports;
 using MediatR;
 
 namespace Application.Guest.Queries
 {
     public class GetGuestQueryHandler : IRequestHandler<GetGuestQuery, GuestResponse>
     {
-        private GuestRepository _guestRepository;
+        private IGuestRepository _guestRepository;
 
-        public GetGuestQueryHandler(GuestRepository guestRepository)
+        public GetGuestQueryHandler(IGuestRepository guestRepository)
         {
             _guestRepository = guestRepository;
         }

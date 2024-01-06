@@ -1,10 +1,5 @@
-using Application.Booking;
-using Application.Booking.Ports;
-using Application.Guest;
-using Application.Guest.Ports;
+using Application.Booking.Dtos;
 using Application.Payment.Ports;
-using Application.Room;
-using Application.Room.Ports;
 using Data;
 using Data.Booking;
 using Data.Guest;
@@ -12,44 +7,40 @@ using Data.Room;
 using Domain.Booking.Ports;
 using Domain.Guest.Ports;
 using Domain.Room.Ports;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Payments.Application;
 using System.Text.Json.Serialization;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddMediatR(typeof(BookingManager));
-builder.Services.AddMediatR(typeof(GuestManager));
-builder.Services.AddMediatR(typeof(RoomManager));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(typeof(BookingDto));
 
-#region Config IoC
-builder.Services.AddScoped<IGuestManager, GuestManager>();
+# region IoC
 builder.Services.AddScoped<IGuestRepository, GuestRepository>();
-builder.Services.AddScoped<IRoomManager, RoomManager>();
 builder.Services.AddScoped<IRoomRepository, RoomRespository>();
-builder.Services.AddScoped<IBookingManager, BookingManager>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IPaymentProcessorFactory, PaymentProcessorFactory>();
-#endregion
+# endregion
 
-
-#region Config DataBase
+# region Config DB
 var connectionString = builder.Configuration.GetConnectionString("Main");
 builder.Services.AddDbContext<HotelDBContext>(
     options => options.UseSqlServer(connectionString));
-#endregion
+# endregion
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddControllersWithViews()
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+                .AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 var app = builder.Build();
 
@@ -67,4 +58,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-app.UseDeveloperExceptionPage();

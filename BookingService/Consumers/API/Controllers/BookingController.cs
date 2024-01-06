@@ -1,7 +1,6 @@
 ﻿using Application;
 using Application.Booking.Commands;
 using Application.Booking.Dtos;
-using Application.Booking.Ports;
 using Application.Booking.Queries;
 using Application.Payment.Responses;
 using MediatR;
@@ -14,15 +13,13 @@ namespace API.Controllers
     public class BookingController : ControllerBase
     {
         private readonly ILogger<BookingController> _logger;
-        private readonly IBookingManager _bookingManager;
         public List<ErrorCodes> errorCodesList = new List<ErrorCodes> { ErrorCodes.BOOKING_COULDNOT_STORE_DATA,
                                                                       ErrorCodes.BOOKING_NOT_FOUND,
                                                                       ErrorCodes.BOOKING_MISSING_REQUERED_INFORMATION,
                                                                     };
         private readonly IMediator _mediator;
-        public BookingController(ILogger<BookingController> logger, IBookingManager bookingManager, IMediator mediator)
+        public BookingController(ILogger<BookingController> logger, IMediator mediator)
         {
-            _bookingManager = bookingManager;
             _logger = logger;
             _mediator = mediator;
         }
@@ -60,11 +57,14 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("{bookingId}/Pay")]
-        public async Task<ActionResult<PaymentResponse>> Pay(
-            PaymentRequestDto paymentRequestDto, int bookingId)
+        public async Task<ActionResult<PaymentResponse>> Pay(PaymentRequestDto paymentRequestDto, int bookingId)
         {
             paymentRequestDto.BookingId = bookingId;
-            var res = await _bookingManager.PayForABooking(paymentRequestDto);
+            var command = new PayForABookingCommand
+            {
+                PaymentRequestDto = paymentRequestDto
+            };
+            var res = await _mediator.Send(command);
             if (res.Success) return Ok(res.Data);
             return BadRequest(res);
         }

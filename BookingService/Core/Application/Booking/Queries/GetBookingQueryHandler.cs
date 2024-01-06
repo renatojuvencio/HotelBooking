@@ -7,7 +7,7 @@ namespace Application.Booking.Queries
 {
     public class GetBookingQueryHandler : IRequestHandler<GetBookingQuery, BookingResponse>
     {
-        private IBookingRepository _bookingRepository;
+        private readonly IBookingRepository _bookingRepository;
 
         public GetBookingQueryHandler(IBookingRepository bookingRepository)
         {
@@ -17,11 +17,21 @@ namespace Application.Booking.Queries
         {
             var booking = await _bookingRepository.GetAsync(request.id);
 
-            var bookingDto = BookingDto.MapToDto(booking);
+            if(booking != null)
+            {
+                var bookingDto = BookingDto.MapToDto(booking);
+                return new BookingResponse
+                {
+                    Data = bookingDto,
+                    Success = true,
+                };
+            }
+
             return new BookingResponse
             {
-                Data = bookingDto,
-                Success = true,
+                Success = false,
+                ErrorCode = ErrorCodes.BOOKING_NOT_FOUND,
+                Message = $"Booking id {request.id} not found"
             };
         }
     }
