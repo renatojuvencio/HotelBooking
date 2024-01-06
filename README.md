@@ -1,6 +1,7 @@
 # Sobre o Projeto
 
-Olá, meu nome é Renato Juvêncio, e este projeto é resultado do curso de Microserviços com Hexagonal Architecture DDD TDD CQRS SOLID, disponível [aqui](https://www.udemy.com/course/microservicos-com-hexagonal-architecture-ddd-tdd-cqrs-solid/).
+Olá, meu nome é Renato Juvêncio, e este projeto é resultado do curso de Microserviços com Hexagonal Architecture DDD TDD CQRS SOLID, disponível [aqui](https://www.udemy.com/course/microservicos-com-hexagonal-architecture-ddd-tdd-cqrs-solid/).<br />
+Aproveito para deixar meu [linkedin](https://www.linkedin.com/in/renatojuvencio/)
 
 ## Objetivo do Projeto
 
